@@ -210,6 +210,8 @@ struct uwsgi_option uwsgi_python_options[] = {
 	{"py-executable", required_argument, 0, "override sys.executable value", uwsgi_opt_set_str, &up.executable, 0},
 	{"py-sys-executable", required_argument, 0, "override sys.executable value", uwsgi_opt_set_str, &up.executable, 0},
 
+	{"asgi", required_argument, 0, "load an ASGI module", uwsgi_opt_set_str, &up.asgi_config, 0},
+
 	{0, 0, 0, 0, 0, 0, 0},
 };
 
@@ -1259,23 +1261,33 @@ next:
 	if (up.file_config != NULL) {
 		init_uwsgi_app(LOADER_FILE, up.file_config, uwsgi.wsgi_req, up.main_thread, PYTHON_APP_TYPE_WSGI);
 	}
+
 	if (up.pecan != NULL) {
 		init_uwsgi_app(LOADER_PECAN, up.pecan, uwsgi.wsgi_req, up.main_thread, PYTHON_APP_TYPE_WSGI);
 	}
+
 	if (up.paste != NULL) {
 		init_uwsgi_app(LOADER_PASTE, up.paste, uwsgi.wsgi_req, up.main_thread, PYTHON_APP_TYPE_WSGI);
 	}
+
 	if (up.eval != NULL) {
 		init_uwsgi_app(LOADER_EVAL, up.eval, uwsgi.wsgi_req, up.main_thread, PYTHON_APP_TYPE_WSGI);
 	}
+
 	if (up.web3 != NULL) {
 		init_uwsgi_app(LOADER_UWSGI, up.web3, uwsgi.wsgi_req, up.main_thread, PYTHON_APP_TYPE_WEB3);
 	}
+
 	if (up.pump != NULL) {
 		init_uwsgi_app(LOADER_UWSGI, up.pump, uwsgi.wsgi_req, up.main_thread, PYTHON_APP_TYPE_PUMP);
 	}
+
 	if (up.wsgi_lite != NULL) {
 		init_uwsgi_app(LOADER_UWSGI, up.wsgi_lite, uwsgi.wsgi_req, up.main_thread, PYTHON_APP_TYPE_WSGI_LITE);
+	}
+
+	if (up.asgi_config != NULL) {
+		init_uwsgi_app(LOADER_UWSGI, up.asgi_config, uwsgi.wsgi_req, up.main_thread, PYTHON_APP_TYPE_ASGI);
 	}
 
 	if (uwsgi.profiler) {

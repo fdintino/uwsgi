@@ -22,6 +22,7 @@ GCC_LIST = [
     'wsgi_subhandler',
     'web3_subhandler',
     'pump_subhandler',
+    'asgi_subhandler',
     'gil',
     'uwsgi_pymodule',
     'profiler',
